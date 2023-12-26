@@ -10,7 +10,19 @@ export default function LandingPage() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent('/')}`,
+        redirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(
+          "/"
+        )}`,
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+          scope: [
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "openid",
+            "https://www.googleapis.com/auth/drive.readonly",
+          ].join(" "),
+        },
       },
     });
   };
